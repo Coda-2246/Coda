@@ -1,0 +1,16 @@
+<%= simple_form_for @gig do |f| %>
+  <%= f.error_notification %>
+
+  <%= f.input :name, placeholder: "Berlin residency" %>
+  <%= f.input :venue %>
+  <%= f.input :city %>
+  <%= f.input :country_code, collection: %w[GB DE FR AT US ES IT NL],
+              include_blank: "Choose…" %>
+  <%= f.input :start_date, as: :date, html5: true %>
+  <%= f.input :end_date, as: :date, html5: true %>
+  <%= f.input :fee_amount, input_html: { step: "0.01", min: 0 } %>
+  <%= f.input :fee_currency, collection: Gig::CURRENCIES, include_blank: "Choose…" %>
+  <%= f.input :status, collection: Gig.statuses.keys, include_blank: false %>
+
+  <%= f.button :submit, class: "btn btn-primary" %>
+<% end %>

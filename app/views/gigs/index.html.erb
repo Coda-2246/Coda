@@ -1,0 +1,24 @@
+<div class="container py-4">
+  <h1>Gigs</h1>
+
+  <%= link_to "New gig", new_gig_path, class: "btn btn-primary mb-4" %>
+
+  <% if @gigs.any? %>
+    <% @gigs.each do |gig| %>
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">
+            <%= link_to gig.name, gig %>
+          </h5>
+          <p class="card-text text-muted mb-1">
+            <%= [gig.venue, gig.city, gig.country_code].compact_blank.join(" · ") %>
+          </p>
+          <p class="card-text mb-1"><%= gig.date_range %></p>
+          <span class="badge bg-secondary"><%= gig.status.humanize %></span>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <p>No gigs yet.</p>
+  <% end %>
+</div>

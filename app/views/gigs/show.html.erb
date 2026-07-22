@@ -1,0 +1,54 @@
+<div class="container py-4">
+  <h1><%= @gig.name %></h1>
+
+  <p class="text-muted">
+    <%= [@gig.venue, @gig.city, @gig.country_code].compact_blank.join(" · ") %>
+  </p>
+  <p><%= @gig.date_range %> · <span class="badge bg-secondary"><%= @gig.status.humanize %></span></p>
+
+  <% if @gig.fee_amount.present? %>
+    <p>Agreed fee: <%= @gig.fee_amount %> <%= @gig.fee_currency %></p>
+  <% end %>
+
+  <hr>
+
+  <div class="row mb-4">
+    <div class="col">
+      <strong>Income</strong><br>
+      <%= number_with_precision(@gig.total_income, precision: 2) %> <%= current_user.home_currency %>
+    </div>
+    <div class="col">
+      <strong>Expenses</strong><br>
+      <%= number_with_precision(@gig.total_expenses, precision: 2) %> <%= current_user.home_currency %>
+    </div>
+    <div class="col">
+      <strong>Net</strong><br>
+      <%= number_with_precision(@gig.net, precision: 2) %> <%= current_user.home_currency %>
+    </div>
+  </div>
+
+  <h3>Entries</h3>
+  <%= link_to "Log an entry for this gig", new_entry_path(gig_id: @gig.id), class: "btn btn-sm btn-outline-primary mb-3" %>
+
+  <% if @entries.any? %>
+    <ul class="list-group mb-4">
+      <% @entries.each do |entry| %>
+        <li class="list-group-item">
+          <%= link_to entry.description.presence || "Untitled entry", entry %>
+          — <%= entry.kind %> · <%= entry.amount %> <%= entry.currency %>
+          <% if entry.amount_home.present? %>
+            <small class="text-muted">(<%= entry.amount_home %> <%= current_user.home_currency %>)</small>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No entries for this gig yet.</p>
+  <% end %>
+
+  <%= link_to "Edit", edit_gig_path(@gig), class: "btn btn-outline-secondary" %>
+  <%= link_to "Delete", gig_path(@gig),
+        data: { turbo_method: :delete, turbo_confirm: "Delete this gig? Its entries will be kept." },
+        class: "btn btn-outline-danger" %>
+  <%= link_to "Back", gigs_path, class: "btn btn-link" %>
+</div>
