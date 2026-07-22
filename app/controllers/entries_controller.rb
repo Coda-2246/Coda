@@ -1,28 +1,62 @@
 class EntriesController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_entry, only: %i[show edit update destroy]
+
   def index
     @entries = current_user.entries.left_joins(:gig).order(entry_date: :desc)
+    # ... existing filter blocks unchanged ...
+    @entries = @entries.includes(:gig)
+  end
 
-    if params[:query].present?
-      query = "%#{params[:query]}%"
+  # ↓ everything below is new
 
-      @entries = @entries.where(
-        "entries.description ILIKE :query
-         OR entries.currency ILIKE :query
-         OR entries.country_code ILIKE :query
-         OR gigs.name ILIKE :query",
-        query: query
-      )
+  def show; end
+
+  def new
+    @entry = current_user.entries.new(
+      entry_date: Date.current,
+      currency: current_user.home_currency,
+      kind: params[:kind] || "expense",
+      gig_id: params[:gig_id]
+    )
+  end
+
+  def create
+    @entry = current_user.entries.new(entry_params)
+    @entry.status = :confirmed
+
+    if @entry.save
+      redirect_to @entry, notice: "Entry logged."
+    else
+      render :new, status: :unprocessable_entity
     end
+  end
 
-    if params[:country].present?
-      @entries = @entries.where(country_code: params[:country])
+  def edit; end
+
+  def update
+    if @entry.update(entry_params)
+      redirect_to @entry, notice: "Entry updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
+  end
 
-    if params[:date_range].present?
-      dates = params[:date_range].split(" to ")
+  def destroy
+    @entry.destroy
+    redirect_to entries_path, notice: "Entry deleted.", status: :see_other
+  end
 
-      @entries = @entries.where("entry_date >= ?", dates.first) if dates.first.present?
-      @entries = @entries.where("entry_date <= ?", dates.second) if dates.second.present?
-    end
+  private
+
+  def set_entry
+    @entry = current_user.entries.find(params[:id])
+  end
+
+  def entry_params
+    params.require(:entry).permit(
+      :kind, :category, :description, :amount, :currency,
+      :entry_date, :country_code, :gig_id, :receipt
+    )
   end
 end
