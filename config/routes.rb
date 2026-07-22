@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
 resources :entries
 resources :gigs
+get "dashboard", to: "dashboard#show", as: :dashboard
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

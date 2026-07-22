@@ -3,7 +3,7 @@
   <p class="lead">Track income and expenses across countries and currencies.</p>
 
   <% if user_signed_in? %>
-    <%= link_to "View entries", entries_path, class: "btn btn-primary" %>
+    <%= link_to "Go to dashboard", dashboard_path, class: "btn btn-primary" %>
     <%= link_to "Log an entry", new_entry_path, class: "btn btn-outline-primary" %>
   <% else %>
     <%= link_to "Get started", new_user_registration_path, class: "btn btn-primary" %>
