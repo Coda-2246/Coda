@@ -10,9 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_18_104543) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_22_212745) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.string "name", null: false
+    t.bigint "record_id", null: false
+    t.string "record_type", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.bigint "byte_size", null: false
+    t.string "checksum"
+    t.string "content_type"
+    t.datetime "created_at", null: false
+    t.string "filename", null: false
+    t.string "key", null: false
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
 
   create_table "entries", force: :cascade do |t|
     t.decimal "amount", precision: 12, scale: 2
@@ -27,7 +55,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_18_104543) do
     t.bigint "gig_id"
     t.integer "kind"
     t.jsonb "parsed_data"
-    t.integer "status"
+    t.integer "status", default: 0
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["gig_id"], name: "index_entries_on_gig_id"
@@ -53,7 +81,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_18_104543) do
     t.string "fee_currency"
     t.string "name"
     t.date "start_date"
-    t.integer "status"
+    t.integer "status", default: 0
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.string "venue"
@@ -73,6 +101,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_18_104543) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "entries", "gigs"
   add_foreign_key "entries", "users"
   add_foreign_key "gigs", "users"
