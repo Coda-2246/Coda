@@ -1,0 +1,87 @@
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="mb-0">Dashboard</h1>
+
+    <%= form_with url: dashboard_path, method: :get, class: "d-flex gap-2" do |f| %>
+      <%= f.select :year, @years, { selected: @year },
+            class: "form-select", onchange: "this.form.requestSubmit()" %>
+    <% end %>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-md-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <h6 class="text-muted text-uppercase small">Income</h6>
+          <h3 class="mb-0"><%= money(@income, current_user.home_currency) %></h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <h6 class="text-muted text-uppercase small">Expenses</h6>
+          <h3 class="mb-0"><%= money(@expenses, current_user.home_currency) %></h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <h6 class="text-muted text-uppercase small">Net</h6>
+          <h3 class="mb-0 <%= "text-danger" if @net.negative? %>">
+            <%= money(@net, current_user.home_currency) %>
+          </h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% if @unconverted.positive? %>
+    <div class="alert alert-warning">
+      <%= pluralize(@unconverted, "entry") %> couldn't be converted to
+      <%= current_user.home_currency %> and <%= @unconverted == 1 ? "isn't" : "aren't" %>
+      included in these totals.
+    </div>
+  <% end %>
+
+  <h2 class="h4 mb-3">By jurisdiction</h2>
+
+  <% countries = @totals_by_country.keys.map(&:first).uniq.sort_by { |c| c.to_s } %>
+
+  <% if countries.any? %>
+    <table class="table align-middle">
+      <thead>
+        <tr>
+          <th>Country</th>
+          <th class="text-end">Income</th>
+          <th class="text-end">Expenses</th>
+          <th class="text-end">Net</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% countries.each do |code| %>
+          <% income   = @totals_by_country[[code, "income"]]  || 0 %>
+          <% expenses = @totals_by_country[[code, "expense"]] || 0 %>
+          <% net      = income - expenses %>
+          <tr>
+            <td>
+              <%= link_to country_name(code), entries_path(country: code) %>
+            </td>
+            <td class="text-end"><%= money(income, current_user.home_currency) %></td>
+            <td class="text-end"><%= money(expenses, current_user.home_currency) %></td>
+            <td class="text-end <%= "text-danger" if net.negative? %>">
+              <%= money(net, current_user.home_currency) %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <p class="text-muted small">
+      All amounts converted to <%= current_user.home_currency %>.
+      Illustrative only — not tax advice.
+    </p>
+  <% else %>
+    <p>No entries for <%= @year %> yet. <%= link_to "Log one", new_entry_path %>.</p>
+  <% end %>
+</div>
