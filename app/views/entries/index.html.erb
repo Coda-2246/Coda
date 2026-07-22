@@ -1,5 +1,7 @@
 <h1>Entries</h1>
 
+<%= link_to "New entry", new_entry_path, class: "btn btn-primary" %>
+
 <%= form_with url: entries_path, method: :get do |form| %>
   <%= form.text_field :query,
       value: params[:query],
@@ -27,8 +29,7 @@
 <% if @entries.any? %>
   <% @entries.each do |entry| %>
     <div>
-      <h3><%= entry.description.presence || "Untitled entry" %></h3>
-
+      <h3><%= link_to entry.description.presence || "Untitled entry", entry %></h3>
       <p>
         <%= entry.kind %> —
         <%= entry.amount %>
