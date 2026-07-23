@@ -1,20 +1,41 @@
 <div class="container py-4">
-  <h1>Gigs</h1>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="mb-0">Gigs</h1>
 
-  <%= link_to "New gig", new_gig_path, class: "btn btn-primary mb-4" %>
+    <%= link_to "New gig", new_gig_path, class: "btn btn-primary" %>
+  </div>
 
   <% if @gigs.any? %>
     <% @gigs.each do |gig| %>
       <div class="card mb-3">
         <div class="card-body">
           <h5 class="card-title">
-            <%= link_to gig.name, gig %>
+            <%= link_to gig.name,
+                        gig,
+                        class: "link-primary text-decoration-underline fw-semibold" %>
           </h5>
+
           <p class="card-text text-muted mb-1">
-            <%= [gig.venue, gig.city, gig.country_code].compact_blank.join(" · ") %>
+            <%= [gig.venue, gig.city, country_name(gig.country_code)].compact_blank.join(" · ") %>
           </p>
-          <p class="card-text mb-1"><%= gig.date_range %></p>
-          <span class="badge bg-secondary"><%= gig.status.humanize %></span>
+
+          <p class="card-text mb-1">
+            <%= gig.start_date.strftime("%d %b %Y") %>
+
+            <% if gig.end_date.present? && gig.end_date != gig.start_date %>
+              – <%= gig.end_date.strftime("%d %b %Y") %>
+            <% end %>
+          </p>
+
+          <% if gig.fee_amount.present? %>
+            <p class="mb-2">
+              <strong><%= money(gig.fee_amount, gig.fee_currency) %></strong>
+            </p>
+          <% end %>
+
+          <span class="badge bg-secondary">
+            <%= gig.status.humanize %>
+          </span>
         </div>
       </div>
     <% end %>

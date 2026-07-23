@@ -2,28 +2,46 @@
 
 <p>
   <%= @entry.kind.humanize %>
-  <% if @entry.category.present? %> · <%= @entry.category.humanize %><% end %>
+  <% if @entry.category.present? %>
+    · <%= @entry.category.humanize %>
+  <% end %>
 </p>
 
 <p>
-  <strong><%= number_with_precision(@entry.amount, precision: 2) %> <%= @entry.currency %></strong>
+  <strong><%= money(@entry.amount, @entry.currency) %></strong>
+
   <% if @entry.amount_home.present? %>
-    — <%= number_with_precision(@entry.amount_home, precision: 2) %> <%= current_user.home_currency %>
-    <small>(rate <%= @entry.fx_rate %>)</small>
+    — <%= money(@entry.amount_home, current_user.home_currency) %>
+
+    <% if @entry.fx_rate.present? %>
+      <small>
+        (rate <%= number_with_precision(@entry.fx_rate, precision: 4) %>)
+      </small>
+    <% end %>
   <% else %>
     <em>conversion pending</em>
   <% end %>
 </p>
 
-<p><%= @entry.entry_date %></p>
-<p>Country: <%= @entry.country_code.presence || "Not specified" %></p>
-<p>Gig: <%= @entry.gig&.name || "—" %></p>
+<p><%= @entry.entry_date.strftime("%d %b %Y") %></p>
+
+<p>
+  Country: <%= country_name(@entry.country_code) %>
+</p>
+
+<p>
+  Gig: <%= @entry.gig&.name || "—" %>
+</p>
 
 <% if @entry.receipt.attached? %>
   <%= image_tag @entry.receipt, style: "max-width: 300px" %>
 <% end %>
 
-<%= link_to "Edit", edit_entry_path(@entry) %>
-<%= link_to "Delete", entry_path(@entry),
-      data: { turbo_method: :delete, turbo_confirm: "Delete this entry?" } %>
-<%= link_to "Back", entries_path %>
+<%= link_to "Edit", edit_entry_path(@entry), class: "btn btn-outline-secondary" %>
+
+<%= link_to "Delete",
+      entry_path(@entry),
+      data: { turbo_method: :delete, turbo_confirm: "Delete this entry?" },
+      class: "btn btn-outline-danger" %>
+
+<%= link_to "Back", entries_path, class: "btn btn-link" %>
