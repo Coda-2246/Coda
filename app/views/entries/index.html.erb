@@ -1,52 +1,65 @@
-<h1>Entries</h1>
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="mb-0">Entries</h1>
 
-<%= link_to "New entry", new_entry_path, class: "btn btn-primary" %>
+    <%= link_to "New entry", new_entry_path, class: "btn btn-primary" %>
+  </div>
 
-<%= form_with url: entries_path, method: :get do |form| %>
-  <%= form.text_field :query,
-      value: params[:query],
-      placeholder: "Search entries",
-      class: "form-control" %>
-
-  <%= form.text_field :country,
-      value: params[:country],
-      placeholder: "Country code",
-      class: "form-control" %>
-
-  <%= form.text_field :date_range,
-      value: params[:date_range],
-      placeholder: "Select date range",
-      class: "form-control",
-      data: { controller: "flatpickr" } %>
-
-  <%= form.submit "Search" %>
-
-  <%= link_to "Clear", entries_path %>
-<% end %>
-
-<hr>
-
-<% if @entries.any? %>
-  <% @entries.each do |entry| %>
-    <div>
-      <h3><%= link_to entry.description.presence || "Untitled entry", entry %></h3>
-      <p>
-        <%= entry.kind %> —
-        <%= entry.amount %>
-        <%= entry.currency %>
-      </p>
-
-      <p>
-        Country: <%= entry.country_code.presence || "Not specified" %>
-      </p>
-
-      <p>
-        Date: <%= entry.entry_date %>
-      </p>
+  <%= form_with url: entries_path, method: :get, class: "row g-2 mb-4" do |form| %>
+    <div class="col-md-4">
+      <%= form.text_field :query,
+          value: params[:query],
+          placeholder: "Search entries",
+          class: "form-control" %>
     </div>
 
-    <hr>
+    <div class="col-md-3">
+      <%= form.text_field :country,
+          value: params[:country],
+          placeholder: "Country code",
+          class: "form-control" %>
+    </div>
+
+    <div class="col-md-3">
+      <%= form.text_field :date_range,
+          value: params[:date_range],
+          placeholder: "Select date range",
+          class: "form-control",
+          data: { controller: "flatpickr" } %>
+    </div>
+
+    <div class="col-md-2 d-flex gap-2">
+      <%= form.submit "Search", class: "btn btn-primary" %>
+      <%= link_to "Clear", entries_path, class: "btn btn-outline-secondary" %>
+    </div>
   <% end %>
-<% else %>
-  <p>No entries found.</p>
-<% end %>
+
+  <% if @entries.any? %>
+    <% @entries.each do |entry| %>
+      <div class="card mb-3">
+        <div class="card-body">
+          <h3 class="h5">
+            <%= link_to entry.description.presence || "Untitled entry",
+                        entry,
+                        class: "link-primary text-decoration-underline fw-semibold" %>
+          </h3>
+
+          <p class="mb-1">
+            <%= entry.kind.humanize %> —
+            <strong><%= money(entry.amount, entry.currency) %></strong>
+          </p>
+
+          <p class="text-muted mb-1">
+            Country: <%= country_name(entry.country_code) %>
+          </p>
+
+          <p class="text-muted mb-0">
+            Date: <%= entry.entry_date.strftime("%d %b %Y") %>
+          </p>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <p>No entries found.</p>
+  <% end %>
+</div>
