@@ -2,7 +2,9 @@
   <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
     <h1 class="mb-0">Entries</h1>
 
-    <%= link_to "New entry", new_entry_path, class: "btn btn-primary" %>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newEntryModal">
+      New entry
+    </button>
   </div>
 
   <%= form_with url: entries_path, method: :get, class: "row g-2 mb-4" do |form| %>
@@ -62,4 +64,42 @@
   <% else %>
     <p>No entries found.</p>
   <% end %>
+
+  <div class="modal fade" id="newEntryModal" tabindex="-1" aria-labelledby="newEntryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="newEntryModalLabel">New entry</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <p class="text-muted">How would you like to add this entry?</p>
+
+          <div class="d-grid mb-4">
+            <%= link_to "Enter manually", new_entry_path, class: "btn btn-outline-primary" %>
+          </div>
+
+          <hr>
+
+          <p class="fw-semibold mb-2">Or upload a receipt/invoice</p>
+
+          <%= form_with url: extract_entries_path, method: :post, multipart: true do |f| %>
+            <div class="mb-2">
+              <%= f.file_field :document,
+                    accept: "image/*,.pdf",
+                    class: "form-control",
+                    required: true %>
+            </div>
+
+            <div class="d-grid">
+              <%= f.submit "Upload document & extract",
+                    class: "btn btn-primary",
+                    data: { turbo_submits_with: "Extracting…" } %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
