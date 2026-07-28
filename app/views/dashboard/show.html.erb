@@ -101,7 +101,14 @@
   <% else %>
     <p>
       No entries for <%= @year %> yet.
-      <%= link_to "Log one", new_entry_path %>.
+      <button type="button"
+              class="btn btn-link p-0 align-baseline"
+              data-bs-toggle="modal"
+              data-bs-target="#newEntryModal">
+        Log one
+      </button>.
     </p>
   <% end %>
+
+  <%= render "entries/new_entry_modal" %>
 </div>
