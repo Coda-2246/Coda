@@ -65,7 +65,11 @@ class EntriesController < ApplicationController
     @entry.currency ||= current_user.home_currency
     @entry.receipt.attach(result.blob)
 
-    render :new
+    if @entry.save
+      redirect_to edit_entry_path(@entry), notice: "Entry extracted — review and confirm the details."
+    else
+      render :new, status: :unprocessable_entity
+    end
   rescue EntryExtractor::ExtractionFailed => e
     redirect_to entries_path, alert: "Couldn't read that document: #{e.message}"
   end
