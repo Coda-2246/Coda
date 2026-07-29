@@ -53,6 +53,27 @@ class EntriesController < ApplicationController
     end
   end
 
+  def extract
+    if params[:document].blank?
+      return redirect_to entries_path, alert: "Choose a file to upload."
+    end
+
+    result = EntryExtractor.new(params[:document]).call
+
+    @entry = current_user.entries.new(result.attributes)
+    @entry.entry_date ||= Date.current
+    @entry.currency ||= current_user.home_currency
+    @entry.receipt.attach(result.blob)
+
+    if @entry.save
+      redirect_to edit_entry_path(@entry), notice: "Entry extracted — review and confirm the details."
+    else
+      render :new, status: :unprocessable_entity
+    end
+  rescue EntryExtractor::ExtractionFailed => e
+    redirect_to entries_path, alert: "Couldn't read that document: #{e.message}"
+  end
+
   def edit; end
 
   def update

@@ -14,7 +14,28 @@
               label_method: ->(g) { "#{g.name} — #{g.city}" },
               include_blank: "No gig" %>
   <%= f.input :description %>
-  <%= f.input :receipt, as: :file %>
+
+  <% if f.object.new_record? && f.object.receipt.attached? %>
+    <%= f.hidden_field :receipt, value: f.object.receipt.blob.signed_id %>
+    <p class="text-muted small mb-3">
+      Receipt: <%= f.object.receipt.filename %> (from uploaded document)
+    </p>
+  <% else %>
+    <% if f.object.receipt.attached? %>
+      <div class="mb-2">
+        <% if f.object.receipt.image? %>
+          <%= image_tag f.object.receipt, class: "img-fluid mb-2 d-block", style: "max-width: 200px" %>
+        <% end %>
+        <p class="text-muted small mb-2">
+          Current receipt:
+          <%= link_to f.object.receipt.filename, rails_blob_path(f.object.receipt, disposition: "attachment") %>
+        </p>
+      </div>
+    <% end %>
+
+    <%= f.input :receipt, as: :file,
+          hint: (f.object.receipt.attached? ? "Upload a file to replace the current receipt" : nil) %>
+  <% end %>
 
   <%= f.button :submit, class: "btn btn-primary" %>
 <% end %>

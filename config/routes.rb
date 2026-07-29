@@ -3,7 +3,11 @@ Rails.application.routes.draw do
   root to: "pages#home"
 
 
-resources :entries
+resources :entries do
+  collection do
+    post :extract
+  end
+end
 resources :gigs
 get "dashboard", to: "dashboard#show", as: :dashboard
 
