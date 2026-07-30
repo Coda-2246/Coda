@@ -17,10 +17,20 @@ class GigsController < ApplicationController
   def create
     @gig = current_user.gigs.new(gig_params)
 
-    if @gig.save
-      redirect_to @gig, notice: "Gig created."
-    else
-      render :new, status: :unprocessable_entity
+    respond_to do |format|
+      if @gig.save
+        format.html { redirect_to @gig, notice: "Gig created." }
+        format.turbo_stream
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(
+            "new_gig_quick_form",
+            partial: "gigs/quick_create_form",
+            locals: { gig: @gig }
+          ), status: :unprocessable_entity
+        end
+      end
     end
   end
 

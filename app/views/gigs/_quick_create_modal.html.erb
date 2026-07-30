@@ -1,0 +1,14 @@
+<div class="modal fade" id="newGigModal" tabindex="-1" aria-labelledby="newGigModalLabel" aria-hidden="true" data-controller="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newGigModalLabel">New gig</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <%= render "gigs/quick_create_form", gig: Gig.new %>
+      </div>
+    </div>
+  </div>
+</div>

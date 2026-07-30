@@ -15,6 +15,7 @@ class Entry < ApplicationRecord
   validates :amount, :currency, :entry_date, :kind, presence: true
   validates :amount, numericality: { greater_than: 0 }
   validates :currency, inclusion: { in: CURRENCIES }
+  validates :gig, presence: true
 
   scope :for_year, ->(year) { where(entry_date: Date.new(year).all_year) }
 

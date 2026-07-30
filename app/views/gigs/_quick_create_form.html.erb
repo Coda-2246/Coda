@@ -1,0 +1,12 @@
+<div id="new_gig_quick_form">
+  <%= simple_form_for gig, url: gigs_path, data: { action: "turbo:submit-end->modal#hideOnSuccess" } do |f| %>
+    <%= f.error_notification %>
+
+    <%= f.input :name, input_html: { required: true } %>
+    <%= f.input :start_date, as: :date, html5: true, input_html: { required: true } %>
+    <%= f.input :city %>
+    <%= f.input :country_code, collection: %w[GB DE FR AT US ES IT NL], include_blank: "Choose…" %>
+
+    <%= f.button :submit, "Create gig", class: "btn btn-primary" %>
+  <% end %>
+</div>
