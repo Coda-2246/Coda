@@ -1,0 +1,7 @@
+<%= turbo_stream.before "new_gig_option" do %>
+  <option value="<%= @gig.id %>" selected><%= @gig.name %> — <%= @gig.city %></option>
+<% end %>
+
+<%= turbo_stream.replace "new_gig_quick_form" do %>
+  <%= render "gigs/quick_create_form", gig: Gig.new %>
+<% end %>

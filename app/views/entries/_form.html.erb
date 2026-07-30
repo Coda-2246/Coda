@@ -12,7 +12,11 @@
               hint: "Where the money was earned or spent" %>
   <%= f.association :gig, collection: current_user.gigs.order(start_date: :desc),
               label_method: ->(g) { "#{g.name} — #{g.city}" },
-              include_blank: "No gig" %>
+              include_blank: false,
+              input_html: {
+                id: "entry_gig_select",
+                data: { controller: "gig-select", action: "change->gig-select#change" }
+              } %>
   <%= f.input :description %>
 
   <% if f.object.new_record? && f.object.receipt.attached? %>
@@ -39,3 +43,5 @@
 
   <%= f.button :submit, class: "btn btn-primary" %>
 <% end %>
+
+<%= render "gigs/quick_create_modal" %>
