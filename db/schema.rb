@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_22_212745) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_30_080922) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -88,6 +88,25 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_22_212745) do
     t.index ["user_id"], name: "index_gigs_on_user_id"
   end
 
+  create_table "tax_adviser_conversations", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "title"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_tax_adviser_conversations_on_user_id"
+  end
+
+  create_table "tax_adviser_messages", force: :cascade do |t|
+    t.text "answer"
+    t.datetime "created_at", null: false
+    t.text "question"
+    t.bigint "tax_adviser_conversation_id"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["tax_adviser_conversation_id"], name: "index_tax_adviser_messages_on_tax_adviser_conversation_id"
+    t.index ["user_id"], name: "index_tax_adviser_messages_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email", default: "", null: false
@@ -106,4 +125,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_22_212745) do
   add_foreign_key "entries", "gigs"
   add_foreign_key "entries", "users"
   add_foreign_key "gigs", "users"
+  add_foreign_key "tax_adviser_conversations", "users"
+  add_foreign_key "tax_adviser_messages", "tax_adviser_conversations"
+  add_foreign_key "tax_adviser_messages", "users"
 end

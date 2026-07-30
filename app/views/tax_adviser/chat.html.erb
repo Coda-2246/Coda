@@ -1,0 +1,209 @@
+<style>
+  .adviser-page {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .adviser-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .adviser-actions {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .adviser-conversation {
+    background: white;
+    border-radius: 18px;
+    padding: 32px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  }
+
+  .message-row {
+    display: flex;
+    margin-bottom: 22px;
+  }
+
+  .sender-row {
+    justify-content: flex-end;
+  }
+
+  .receiver-row {
+    justify-content: flex-start;
+  }
+
+  .sender-style,
+  .receiver-style {
+    width: fit-content;
+    max-width: 78%;
+    padding: 16px 18px;
+    border-radius: 16px;
+  }
+
+  .sender-style {
+    background: #252e4b;
+    color: white;
+    border-bottom-right-radius: 5px;
+  }
+
+  .receiver-style {
+    background: #f2f0eb;
+    color: #212529;
+    border-bottom-left-radius: 5px;
+  }
+
+  .message-name {
+    font-size: 0.78rem;
+    margin-bottom: 6px;
+    opacity: 0.7;
+  }
+
+  .sender-style .message-name {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .adviser-form {
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid #e5e5e5;
+  }
+
+  .adviser-form textarea {
+    border-radius: 12px;
+  }
+
+  .adviser-loading {
+    margin-top: 16px;
+  }
+
+  @media (max-width: 767px) {
+    .adviser-header {
+      flex-direction: column;
+    }
+
+    .adviser-actions {
+      width: 100%;
+    }
+
+    .adviser-actions form,
+    .adviser-actions a {
+      flex: 1;
+    }
+
+    .adviser-conversation {
+      padding: 22px;
+    }
+
+    .sender-style,
+    .receiver-style {
+      max-width: 92%;
+    }
+  }
+</style>
+
+<div class="container py-5">
+  <div class="adviser-page">
+    <div class="adviser-header">
+      <div>
+        <h1 class="h2 mb-1">
+          <%= @conversation.title %>
+        </h1>
+
+        <p class="text-muted mb-0">
+          Ask Coda about your gigs, expenses, profitability, and international work.
+        </p>
+      </div>
+
+      <div class="adviser-actions">
+        <%= link_to "Chat history",
+                    tax_adviser_path,
+                    class: "btn btn-outline-dark rounded-3 px-3 py-2" %>
+
+        <%= button_to "New chat",
+                      tax_adviser_chats_path,
+                      method: :post,
+                      class: "btn btn-dark rounded-3 px-4 py-2" %>
+      </div>
+    </div>
+
+    <div class="adviser-conversation">
+      <% if @messages.any? %>
+        <% @messages.each do |message| %>
+          <div class="message-row sender-row">
+            <div class="sender-style">
+              <div class="message-name">You</div>
+
+              <div>
+                <%= message.question %>
+              </div>
+            </div>
+          </div>
+
+          <div class="message-row receiver-row">
+            <div class="receiver-style">
+              <div class="message-name">Coda</div>
+
+              <div>
+                <%= render_adviser_answer(message.answer) %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <p class="text-muted text-center py-5 mb-0">
+          Ask your first question to begin this chat.
+        </p>
+      <% end %>
+
+      <div class="adviser-form">
+        <%= form_with url: ask_tax_adviser_chat_path(@conversation),
+                      method: :post,
+                      data: { turbo: false },
+                      html: {
+                        onsubmit: "
+                          const button = this.querySelector('input[type=submit]');
+                          button.value = 'Coda is thinking...';
+                          button.disabled = true;
+                          this.querySelector('.adviser-loading').classList.remove('d-none');
+                        "
+                      } do |form| %>
+
+          <%= form.label :question,
+                         @messages.any? ? "Ask a follow-up" : "Ask a question",
+                         class: "form-label fw-semibold" %>
+
+          <%= form.text_area :question,
+                             rows: 3,
+                             class: "form-control mb-3",
+                             placeholder: @messages.any? ?
+                               "Ask a follow-up question..." :
+                               "Which gig was most profitable this year?",
+                             autofocus: true %>
+
+          <%= form.submit "Ask Coda",
+                          class: "btn btn-dark rounded-3 px-4 py-2" %>
+
+          <div class="adviser-loading d-none">
+            <div class="progress" style="height: 6px;">
+              <div class="progress-bar progress-bar-striped progress-bar-animated w-100"></div>
+            </div>
+
+            <p class="small text-muted mt-2 mb-0">
+              Coda is reviewing your gigs and expenses...
+            </p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <p class="small text-muted mt-3">
+      Coda provides general guidance, not professional tax advice.
+    </p>
+  </div>
+</div>
