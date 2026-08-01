@@ -1,26 +1,34 @@
 Rails.application.routes.draw do
   devise_for :users
+
   root to: "pages#home"
 
-
-resources :entries do
-  collection do
-    post :extract
+  resources :entries do
+    collection do
+      post :extract
+    end
   end
-end
-resources :gigs
-get "dashboard", to: "dashboard#show", as: :dashboard
 
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  resources :gigs
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
+  get "dashboard", to: "dashboard#show", as: :dashboard
 
-  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-  # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
+  get "tax-adviser",
+      to: "tax_adviser#show",
+      as: :tax_adviser
 
-  # Defines the root path route ("/")
-  # root "posts#index"
+  post "tax-adviser/chats",
+       to: "tax_adviser#create",
+       as: :tax_adviser_chats
+
+  get "tax-adviser/chats/:id",
+      to: "tax_adviser#chat",
+      as: :tax_adviser_chat
+
+  post "tax-adviser/chats/:id/ask",
+       to: "tax_adviser#ask",
+       as: :ask_tax_adviser_chat
+
+  get "up" => "rails/health#show",
+      as: :rails_health_check
 end

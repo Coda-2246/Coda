@@ -1,0 +1,52 @@
+<div class="container py-5">
+  <div class="mx-auto" style="max-width: 850px;">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <h1 class="mb-1">Chat history</h1>
+
+        <p class="text-muted mb-0">
+          Open one of your previous Coda Tax Adviser conversations.
+        </p>
+      </div>
+
+      <%= button_to "New chat",
+                    tax_adviser_chats_path,
+                    method: :post,
+                    class: "btn btn-dark rounded-3 px-4 py-2" %>
+    </div>
+
+    <% if @conversations.any? %>
+      <div class="d-flex flex-column gap-3">
+        <% @conversations.each do |conversation| %>
+          <%= link_to tax_adviser_chat_path(conversation),
+                      class: "card border-0 shadow-sm rounded-4 text-decoration-none text-dark" do %>
+            <div class="card-body p-4">
+              <div class="fw-semibold fs-5">
+                <%= conversation.title %>
+              </div>
+
+              <div class="small text-muted mt-2">
+                <%= pluralize(conversation.tax_adviser_messages.count, "question") %>
+                ·
+                <%= conversation.updated_at.strftime("%d %b %Y, %H:%M") %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-5 text-center">
+          <p class="text-muted mb-3">
+            No previous chats yet.
+          </p>
+
+          <%= button_to "Start your first chat",
+                        tax_adviser_chats_path,
+                        method: :post,
+                        class: "btn btn-dark rounded-3 px-4 py-2" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
