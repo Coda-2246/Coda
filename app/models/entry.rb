@@ -5,6 +5,7 @@ class Entry < ApplicationRecord
   has_one_attached :receipt
 
   CURRENCIES = %w[EUR GBP USD CHF SEK NOK DKK PLN CZK AUD CAD JPY].freeze
+  COUNTRIES = %w[GB DE FR AT US ES IT NL].freeze
 
   attribute :status, :integer, default: 0
 
@@ -44,10 +45,10 @@ class Entry < ApplicationRecord
       return
     end
 
-    rate = ExchangeRate.rate_for(base: currency, target: home, on: entry_date)
+    rate = ExchangeRate.rate_for(base: home, target: currency, on: entry_date)
     return if rate.nil? # leave amount_home nil; view shows "pending"
 
     self.fx_rate = rate
-    self.amount_home = (amount * rate).round(2)
+    self.amount_home = (amount / rate).round(2)
   end
 end

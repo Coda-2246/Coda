@@ -42,7 +42,9 @@
       <div class="card h-100">
         <div class="card-body">
           <strong>Net</strong><br>
-          <%= money(@gig.net, current_user.home_currency) %>
+          <span class="<%= net_amount_color_class(@gig.net) %>">
+            <%= money(@gig.net, current_user.home_currency) %>
+          </span>
         </div>
       </div>
     </div>
@@ -51,9 +53,12 @@
   <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
     <h3 class="mb-0">Entries</h3>
 
-    <%= link_to "Log an entry for this gig",
-                new_entry_path(gig_id: @gig.id),
-                class: "btn btn-sm btn-outline-primary" %>
+    <button type="button"
+            class="btn btn-sm btn-outline-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#newEntryModal">
+      Log an entry for this gig
+    </button>
   </div>
 
   <% if @entries.any? %>
@@ -91,4 +96,6 @@
 
     <%= link_to "Back", gigs_path, class: "btn btn-link" %>
   </div>
+
+  <%= render "entries/new_entry_modal", gig_id: @gig.id %>
 </div>

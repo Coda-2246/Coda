@@ -24,7 +24,8 @@ class EntryExtractor
          RubyLLM::ConfigurationError,
          RubyLLM::ModelNotFoundError,
          RubyLLM::UnsupportedAttachmentError => e
-    raise ExtractionFailed, e.message
+    Rails.logger.error("EntryExtractor failed: #{e.class}: #{e.message}")
+    raise ExtractionFailed, "We couldn't process that document."
   end
 
   private

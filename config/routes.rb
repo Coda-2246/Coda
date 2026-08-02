@@ -11,6 +11,8 @@ Rails.application.routes.draw do
 
   resources :gigs
 
+  resource :company, only: %i[show edit update]
+
   get "dashboard", to: "dashboard#show", as: :dashboard
 
   get "tax-adviser",

@@ -12,9 +12,16 @@
   <div class="d-flex flex-wrap gap-2">
     <% if user_signed_in? %>
       <%= link_to "Go to dashboard", dashboard_path, class: "btn btn-primary" %>
-      <%= link_to "Log an entry", new_entry_path, class: "btn btn-outline-primary" %>
+      <button type="button"
+              class="btn btn-outline-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#newEntryModal">
+        Log an entry
+      </button>
     <% else %>
       <%= link_to "Get started", new_user_registration_path, class: "btn btn-primary" %>
     <% end %>
   </div>
+
+  <%= render "entries/new_entry_modal" if user_signed_in? %>
 </div>

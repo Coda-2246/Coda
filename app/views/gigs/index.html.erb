@@ -33,6 +33,13 @@
             </p>
           <% end %>
 
+          <p class="mb-2">
+            Net:
+            <strong class="<%= net_amount_color_class(gig.net) %>">
+              <%= money(gig.net, current_user.home_currency) %>
+            </strong>
+          </p>
+
           <span class="badge bg-secondary">
             <%= gig.status.humanize %>
           </span>

@@ -63,6 +63,7 @@ class EntriesController < ApplicationController
     @entry = current_user.entries.new(result.attributes)
     @entry.entry_date ||= Date.current
     @entry.currency ||= current_user.home_currency
+    @entry.gig_id ||= params[:gig_id]
     @entry.receipt.attach(result.blob)
 
     if @entry.save
@@ -70,8 +71,8 @@ class EntriesController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
-  rescue EntryExtractor::ExtractionFailed => e
-    redirect_to entries_path, alert: "Couldn't read that document: #{e.message}"
+  rescue EntryExtractor::ExtractionFailed
+    redirect_to entries_path, alert: "Couldn't read that document. Please try again or enter it manually."
   end
 
   def edit; end
