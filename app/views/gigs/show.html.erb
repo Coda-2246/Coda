@@ -1,5 +1,19 @@
 <div class="container py-4">
-  <h1><%= @gig.name %></h1>
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+    <h1 class="mb-0"><%= @gig.name %></h1>
+
+    <div class="d-flex flex-wrap gap-2">
+      <%= link_to "Edit", edit_gig_path(@gig), class: "btn btn-outline-secondary" %>
+
+      <%= link_to "Delete",
+                  gig_path(@gig),
+                  data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Delete this gig? Its entries will be kept."
+                  },
+                  class: "btn btn-outline-danger" %>
+    </div>
+  </div>
 
   <p class="text-muted">
     <%= [@gig.venue, @gig.city, country_name(@gig.country_code)].compact_blank.join(" · ") %>
@@ -50,7 +64,7 @@
     </div>
   </div>
 
-  <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+  <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
     <h3 class="mb-0">Entries</h3>
 
     <button type="button"
@@ -82,20 +96,6 @@
   <% else %>
     <p>No entries for this gig yet.</p>
   <% end %>
-
-  <div class="d-flex flex-wrap gap-2">
-    <%= link_to "Edit", edit_gig_path(@gig), class: "btn btn-outline-secondary" %>
-
-    <%= link_to "Delete",
-                gig_path(@gig),
-                data: {
-                  turbo_method: :delete,
-                  turbo_confirm: "Delete this gig? Its entries will be kept."
-                },
-                class: "btn btn-outline-danger" %>
-
-    <%= link_to "Back", gigs_path, class: "btn btn-link" %>
-  </div>
 
   <%= render "entries/new_entry_modal", gig_id: @gig.id %>
 </div>
