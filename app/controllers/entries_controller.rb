@@ -63,6 +63,7 @@ class EntriesController < ApplicationController
     @entry = current_user.entries.new(result.attributes)
     @entry.entry_date ||= Date.current
     @entry.currency ||= current_user.home_currency
+    @entry.gig_id ||= params[:gig_id]
     @entry.receipt.attach(result.blob)
 
     if @entry.save

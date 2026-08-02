@@ -7,7 +7,7 @@
   <%= f.input :amount, input_html: { step: "0.01", min: 0 } %>
   <%= f.input :currency, collection: Entry::CURRENCIES, include_blank: false %>
   <%= f.input :entry_date, as: :date, html5: true %>
-  <%= f.input :country_code, collection: %w[GB DE FR AT US ES IT NL],
+  <%= f.input :country_code, collection: Entry::COUNTRIES,
               include_blank: "Choose…",
               hint: "Where the money was earned or spent" %>
   <%= f.association :gig, collection: current_user.gigs.order(start_date: :desc),

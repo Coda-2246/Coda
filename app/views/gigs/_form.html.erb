@@ -4,7 +4,7 @@
   <%= f.input :name, placeholder: "Berlin residency" %>
   <%= f.input :venue %>
   <%= f.input :city %>
-  <%= f.input :country_code, collection: %w[GB DE FR AT US ES IT NL],
+  <%= f.input :country_code, collection: Entry::COUNTRIES,
               include_blank: "Choose…" %>
   <%= f.input :start_date, as: :date, html5: true %>
   <%= f.input :end_date, as: :date, html5: true %>

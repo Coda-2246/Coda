@@ -3,6 +3,12 @@ module ApplicationHelper
     "#{number_with_precision(amount || 0, precision: 2, delimiter: ',')} #{currency}"
   end
 
+  def net_amount_color_class(amount)
+    return "text-warning" if amount.zero?
+
+    amount.positive? ? "text-success" : "text-danger"
+  end
+
   def country_name(code)
     {
       "GB" => "United Kingdom",

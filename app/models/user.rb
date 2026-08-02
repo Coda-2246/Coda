@@ -7,4 +7,10 @@ class User < ApplicationRecord
 
   has_many :tax_adviser_conversations, dependent: :destroy
   has_many :tax_adviser_messages, dependent: :destroy
+
+  has_one :company, dependent: :destroy
+
+  def home_currency
+    company&.default_currency
+  end
 end

@@ -10,7 +10,7 @@
         <p class="text-muted">How would you like to add this entry?</p>
 
         <div class="d-grid mb-4">
-          <%= link_to "Enter manually", new_entry_path, class: "btn btn-outline-primary" %>
+          <%= link_to "Enter manually", new_entry_path(gig_id: local_assigns[:gig_id]), class: "btn btn-outline-primary" %>
         </div>
 
         <hr>
@@ -18,6 +18,10 @@
         <p class="fw-semibold mb-2">Or upload a receipt/invoice</p>
 
         <%= form_with url: extract_entries_path, method: :post, multipart: true do |f| %>
+          <% if local_assigns[:gig_id].present? %>
+            <%= hidden_field_tag :gig_id, local_assigns[:gig_id] %>
+          <% end %>
+
           <div class="mb-2">
             <%= f.file_field :document,
                   accept: "image/*,.pdf",
