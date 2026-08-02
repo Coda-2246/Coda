@@ -71,8 +71,8 @@ class EntriesController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
-  rescue EntryExtractor::ExtractionFailed => e
-    redirect_to entries_path, alert: "Couldn't read that document: #{e.message}"
+  rescue EntryExtractor::ExtractionFailed
+    redirect_to entries_path, alert: "Couldn't read that document. Please try again or enter it manually."
   end
 
   def edit; end

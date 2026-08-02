@@ -9,7 +9,8 @@ class TaxAdviser
   def call
     RubyLLM.chat.ask(prompt).content
   rescue RubyLLM::Error, RubyLLM::ConfigurationError => e
-    raise AdviserFailed, e.message
+    Rails.logger.error("TaxAdviser failed: #{e.class}: #{e.message}")
+    raise AdviserFailed, "The adviser could not answer right now."
   end
 
   private

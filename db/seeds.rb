@@ -3,33 +3,40 @@ puts "Clearing existing demo data..."
 Entry.destroy_all
 Gig.destroy_all
 ExchangeRate.destroy_all
+Company.destroy_all
 User.destroy_all
 
 puts "Creating demo user..."
 
 user = User.create!(
   email: "demo@coda.app",
-  password: "password",
-  home_currency: "GBP"
+  password: "password"
+)
+
+user.create_company!(
+  company_name: "Coda Touring Ltd",
+  tax_id: "GB123456789",
+  country_code: "GB",
+  default_currency: "GBP"
 )
 
 puts "Creating exchange rates..."
 
 [
   # 2024
-  ["USD", "GBP", 0.79, Date.new(2024, 1, 1)],
-  ["EUR", "GBP", 0.86, Date.new(2024, 1, 1)],
-  ["CHF", "GBP", 0.88, Date.new(2024, 1, 1)],
+  ["GBP", "USD", 1.2658, Date.new(2024, 1, 1)],
+  ["GBP", "EUR", 1.1628, Date.new(2024, 1, 1)],
+  ["GBP", "CHF", 1.1364, Date.new(2024, 1, 1)],
 
   # 2025
-  ["USD", "GBP", 0.78, Date.new(2025, 1, 1)],
-  ["EUR", "GBP", 0.84, Date.new(2025, 1, 1)],
-  ["CHF", "GBP", 0.87, Date.new(2025, 1, 1)],
+  ["GBP", "USD", 1.2821, Date.new(2025, 1, 1)],
+  ["GBP", "EUR", 1.1905, Date.new(2025, 1, 1)],
+  ["GBP", "CHF", 1.1494, Date.new(2025, 1, 1)],
 
   # 2026
-  ["USD", "GBP", 0.79, Date.new(2026, 1, 1)],
-  ["EUR", "GBP", 0.86, Date.new(2026, 1, 1)],
-  ["CHF", "GBP", 0.89, Date.new(2026, 1, 1)]
+  ["GBP", "USD", 1.2658, Date.new(2026, 1, 1)],
+  ["GBP", "EUR", 1.1628, Date.new(2026, 1, 1)],
+  ["GBP", "CHF", 1.1236, Date.new(2026, 1, 1)]
 ].each do |base, target, rate, date|
   ExchangeRate.create!(
     base_currency: base,
@@ -306,9 +313,9 @@ entries = [
     status: :confirmed
   },
 
-  # 2025 — independent business expense, no gig
+  # 2025 — independent business expense
   {
-    gig: nil,
+    gig: berlin_2025,
     kind: :expense,
     description: "Annual accounting software",
     amount: 240,
@@ -395,7 +402,7 @@ entries = [
 
   # 2026 — independent business expense
   {
-    gig: nil,
+    gig: london_2025,
     kind: :expense,
     description: "Portable recording equipment",
     amount: 780,
