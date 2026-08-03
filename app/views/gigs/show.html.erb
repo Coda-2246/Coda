@@ -76,23 +76,45 @@
   </div>
 
   <% if @entries.any? %>
-    <ul class="list-group mb-4">
+    <div class="row">
       <% @entries.each do |entry| %>
-        <li class="list-group-item">
-          <%= link_to entry.description.presence || "Untitled entry", entry %>
+        <div class="col-md-4 mb-3">
+          <div class="card h-100">
+            <div class="card-body">
+              <h3 class="h5">
+                <%= link_to entry.description.presence || "Untitled entry",
+                            entry,
+                            class: "link-primary text-decoration-underline fw-semibold" %>
+              </h3>
 
-          —
-          <%= entry.kind.humanize %> ·
-          <%= money(entry.amount, entry.currency) %>
+              <p class="mb-1">
+                <%= entry.kind.humanize %> —
+                <strong><%= money(entry.amount, entry.currency) %></strong>
 
-          <% if entry.amount_home.present? %>
-            <small class="text-muted">
-              (<%= money(entry.amount_home, current_user.home_currency) %>)
-            </small>
-          <% end %>
-        </li>
+                <% if entry.amount_home.present? %>
+                  <span class="text-muted">
+                    (<%= money(entry.amount_home, current_user.home_currency) %>)
+                  </span>
+                <% end %>
+              </p>
+
+              <p class="text-muted mb-0">
+                Date: <%= entry.entry_date.strftime("%d %b %Y") %>
+              </p>
+
+              <div class="d-flex flex-wrap gap-2 mt-3">
+                <%= link_to "Edit", edit_entry_path(entry), class: "btn btn-sm btn-outline-secondary" %>
+
+                <%= link_to "Delete",
+                      entry_path(entry),
+                      data: { turbo_method: :delete, turbo_confirm: "Delete this entry?" },
+                      class: "btn btn-sm btn-outline-danger" %>
+              </div>
+            </div>
+          </div>
+        </div>
       <% end %>
-    </ul>
+    </div>
   <% else %>
     <p>No entries for this gig yet.</p>
   <% end %>
