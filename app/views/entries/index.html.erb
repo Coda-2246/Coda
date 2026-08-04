@@ -58,6 +58,15 @@
           <p class="text-muted mb-0">
             Date: <%= entry.entry_date.strftime("%d %b %Y") %>
           </p>
+
+          <div class="d-flex flex-wrap gap-2 mt-3">
+            <%= link_to "Edit", edit_entry_path(entry), class: "btn btn-sm btn-outline-secondary" %>
+
+            <%= link_to "Delete",
+                  entry_path(entry),
+                  data: { turbo_method: :delete, turbo_confirm: "Delete this entry?" },
+                  class: "btn btn-sm btn-outline-danger" %>
+          </div>
         </div>
       </div>
     <% end %>
