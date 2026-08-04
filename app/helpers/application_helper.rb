@@ -9,6 +9,10 @@ module ApplicationHelper
     amount.positive? ? "text-success" : "text-danger"
   end
 
+  def nav_active?(path)
+    request.path == path || request.path.start_with?("#{path}/")
+  end
+
   def country_name(code)
     {
       "GB" => "United Kingdom",

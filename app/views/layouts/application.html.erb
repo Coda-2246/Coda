@@ -48,5 +48,7 @@
     <%= render "shared/flashes" %>
 
     <%= yield %>
+
+    <%= render "shared/tax_adviser_widget" if user_signed_in? %>
   </body>
 </html>

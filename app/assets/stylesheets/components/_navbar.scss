@@ -1,12 +1,107 @@
-.navbar-lewagon {
-  justify-content: space-between;
-  background: white;
+// Site-wide nav (shared/_navbar.html.erb), used on every page — the
+// landing page and the authenticated app alike — so menu items look and
+// behave identically before and after login. Structure/collapse behavior
+// comes from Bootstrap's navbar; only the visual language (pill shape,
+// brand font, active-page fill) is overridden here.
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  background: rgba(246, 243, 237, .92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
 }
 
-.navbar-lewagon .navbar-collapse {
-  flex-grow: 0;
+.site-header .navbar {
+  padding: 0;
 }
 
-.navbar-lewagon .navbar-brand img {
-  width: 40px;
+.site-nav-inner {
+  min-height: 68px;
+}
+
+.site-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--navy) !important;
+}
+
+.site-nav-links {
+  gap: 6px;
+}
+
+.nav-pill {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--navy) !important;
+  padding: 9px 16px;
+  border-radius: 999px;
+  transition: background .15s ease, color .15s ease;
+}
+
+.nav-pill:hover {
+  background: rgba(31, 42, 68, .06);
+}
+
+.nav-pill.active {
+  background: var(--navy);
+  color: #fff !important;
+}
+
+.btn-pill {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14px;
+  padding: 9px 18px;
+  border-radius: 999px;
+  transition: background .15s ease, color .15s ease, border-color .15s ease, transform .15s ease;
+}
+
+.btn-pill-ghost {
+  color: var(--navy) !important;
+  border: 1.5px solid var(--line);
+}
+
+.btn-pill-ghost:hover {
+  border-color: var(--navy);
+  background: rgba(31, 42, 68, .04);
+}
+
+.btn-pill-primary {
+  background: var(--green);
+  color: #fff !important;
+}
+
+.btn-pill-primary:hover {
+  background: var(--green-bright);
+  transform: translateY(-1px);
+}
+
+.site-nav-cta {
+  margin-left: 6px;
+}
+
+@media (max-width: 767px) {
+  .site-nav-links {
+    padding: 10px 0;
+    gap: 4px;
+  }
+
+  .nav-pill,
+  .btn-pill {
+    display: block;
+    text-align: center;
+  }
+
+  .site-nav-cta {
+    margin-left: 0;
+    margin-top: 4px;
+  }
 }

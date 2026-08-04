@@ -12,14 +12,16 @@
       <%= button_to "New chat",
                     tax_adviser_chats_path,
                     method: :post,
-                    class: "btn btn-dark rounded-3 px-4 py-2" %>
+                    class: "btn btn-dark rounded-3 px-4 py-2",
+                    data: { turbo_frame: "tax_adviser_panel" } %>
     </div>
 
     <% if @conversations.any? %>
       <div class="d-flex flex-column gap-3">
         <% @conversations.each do |conversation| %>
           <%= link_to tax_adviser_chat_path(conversation),
-                      class: "card border-0 shadow-sm rounded-4 text-decoration-none text-dark" do %>
+                      class: "card border-0 shadow-sm rounded-4 text-decoration-none text-dark",
+                      data: { turbo_frame: "tax_adviser_panel" } do %>
             <div class="card-body p-4">
               <div class="fw-semibold fs-5">
                 <%= conversation.title %>
@@ -44,7 +46,8 @@
           <%= button_to "Start your first chat",
                         tax_adviser_chats_path,
                         method: :post,
-                        class: "btn btn-dark rounded-3 px-4 py-2" %>
+                        class: "btn btn-dark rounded-3 px-4 py-2",
+                        data: { turbo_frame: "tax_adviser_panel" } %>
         </div>
       </div>
     <% end %>

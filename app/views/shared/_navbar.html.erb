@@ -1,64 +1,87 @@
-<nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom">
-  <div class="container-fluid">
-    <%= link_to "Coda", root_path, class: "navbar-brand fw-bold" %>
+<header class="site-header">
+  <nav class="navbar navbar-expand-md">
+    <div class="container-fluid site-nav-inner">
+      <%= link_to root_path, class: "navbar-brand site-brand" do %>
+        <svg width="30" height="30" viewBox="0 0 100 100" aria-hidden="true">
+          <path d="M50 8 A42 42 0 1 0 92 50" fill="none" stroke="#1F2A44" stroke-width="17"/>
+          <path d="M50 8 A42 42 0 0 1 88 32" fill="none" stroke="#2F6B44" stroke-width="17"/>
+          <path d="M92 50 A42 42 0 0 0 88 32" fill="none" stroke="#C9C2B4" stroke-width="17"/>
+        </svg>
+        Coda
+      <% end %>
 
-    <button class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+      <button class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ms-auto">
-        <% if user_signed_in? %>
-          <li class="nav-item">
-            <%= link_to "Dashboard",
-                        dashboard_path,
-                        class: "nav-link fw-medium text-dark" %>
-          </li>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav site-nav-links ms-auto align-items-md-center">
+          <% if user_signed_in? %>
+            <li class="nav-item">
+              <%= link_to "Dashboard",
+                          dashboard_path,
+                          class: class_names("nav-link nav-pill", active: nav_active?(dashboard_path)) %>
+            </li>
 
-          <li class="nav-item">
-            <%= link_to "Gigs",
-                        gigs_path,
-                        class: "nav-link fw-medium text-dark" %>
-          </li>
+            <li class="nav-item">
+              <%= link_to "Gigs",
+                          gigs_path,
+                          class: class_names("nav-link nav-pill", active: nav_active?(gigs_path)) %>
+            </li>
 
-          <li class="nav-item">
-            <%= link_to "Tax Adviser",
-                        tax_adviser_path,
-                        class: "nav-link fw-medium text-dark" %>
-          </li>
+            <li class="nav-item">
+              <%= link_to "Tax Adviser",
+                          tax_adviser_path,
+                          class: class_names("nav-link nav-pill", active: nav_active?(tax_adviser_path)) %>
+            </li>
 
-          <li class="nav-item">
-            <%= link_to "Entries",
-                        entries_path,
-                        class: "nav-link fw-medium text-dark" %>
-          </li>
+            <li class="nav-item">
+              <%= link_to "Entries",
+                          entries_path,
+                          class: class_names("nav-link nav-pill", active: nav_active?(entries_path)) %>
+            </li>
 
-          <li class="nav-item">
-            <%= link_to "Company",
-                        company_path,
-                        class: "nav-link fw-medium text-dark" %>
-          </li>
+            <li class="nav-item">
+              <%= link_to "Company",
+                          company_path,
+                          class: class_names("nav-link nav-pill", active: nav_active?(company_path)) %>
+            </li>
 
-          <li class="nav-item">
-            <%= link_to "Log out",
-                        destroy_user_session_path,
-                        data: { turbo_method: :delete },
-                        class: "nav-link fw-medium text-dark" %>
-          </li>
-        <% else %>
-          <li class="nav-item">
-            <%= link_to "Log in",
-                        new_user_session_path,
-                        class: "nav-link fw-medium text-dark" %>
-          </li>
-        <% end %>
-      </ul>
+            <li class="nav-item site-nav-cta">
+              <%= link_to "Log out",
+                          destroy_user_session_path,
+                          data: { turbo_method: :delete },
+                          class: "nav-link btn-pill btn-pill-ghost" %>
+            </li>
+          <% else %>
+            <li class="nav-item">
+              <%= link_to "How it works", "#{root_path}#how", class: "nav-link nav-pill" %>
+            </li>
+
+            <li class="nav-item">
+              <%= link_to "Features", "#{root_path}#features", class: "nav-link nav-pill" %>
+            </li>
+
+            <li class="nav-item">
+              <%= link_to "Currencies", "#{root_path}#currencies", class: "nav-link nav-pill" %>
+            </li>
+
+            <li class="nav-item site-nav-cta">
+              <%= link_to "Log in", new_user_session_path, class: "nav-link btn-pill btn-pill-ghost" %>
+            </li>
+
+            <li class="nav-item site-nav-cta">
+              <%= link_to "Get started", new_user_registration_path, class: "nav-link btn-pill btn-pill-primary" %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
+</header>
