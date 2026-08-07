@@ -3,7 +3,6 @@
 
   <%= f.input :name, placeholder: "Berlin residency" %>
   <%= f.input :venue %>
-  <%= f.input :city %>
   <%= f.input :country_code, collection: Entry::COUNTRIES,
               include_blank: "Choose…" %>
   <%= f.input :start_date, as: :date, html5: true %>
@@ -12,12 +11,9 @@
   <%= f.input :fee_currency, collection: Gig::CURRENCIES, include_blank: "Choose…" %>
   <%= f.input :status, collection: Gig.statuses.keys, include_blank: false %>
 
-  <% if local_assigns[:back_path] %>
-    <div class="d-flex justify-content-between align-items-center gap-2">
-      <%= link_to "Back", back_path, class: "btn btn-outline-secondary" %>
-      <%= f.button :submit, class: "btn btn-primary" %>
-    </div>
-  <% else %>
+  <% back_path = local_assigns[:back_path] || (f.object.persisted? ? gig_path(f.object) : gigs_path) %>
+  <div class="d-flex justify-content-between align-items-center gap-2">
+    <%= link_to "Back", back_path, class: "btn btn-outline-secondary" %>
     <%= f.button :submit, class: "btn btn-primary" %>
-  <% end %>
+  </div>
 <% end %>

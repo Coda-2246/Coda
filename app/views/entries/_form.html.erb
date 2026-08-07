@@ -1,9 +1,13 @@
-<%= simple_form_for @entry do |f| %>
+<%= simple_form_for @entry, html: { data: { controller: "entry-kind" } } do |f| %>
   <%= f.error_notification %>
 
-  <%= f.input :kind, collection: Entry.kinds.keys, include_blank: false %>
-  <%= f.input :category, collection: Entry.categories.keys.map { |c| [c.humanize, c] },
-              include_blank: "Choose…" %>
+  <%= f.input :kind, collection: Entry.kinds.keys, include_blank: false,
+              input_html: { data: { entry_kind_target: "kind", action: "change->entry-kind#toggleCategory" } } %>
+  <div data-entry-kind-target="categoryWrapper">
+    <%= f.input :category, collection: Entry.categories.keys.map { |c| [c.humanize, c] },
+                include_blank: "Choose…",
+                input_html: { data: { entry_kind_target: "categorySelect" } } %>
+  </div>
   <%= f.input :amount, input_html: { step: "0.01", min: 0 } %>
   <%= f.input :currency, collection: Entry::CURRENCIES, include_blank: false %>
   <%= f.input :entry_date, as: :date, html5: true %>
@@ -11,7 +15,7 @@
               include_blank: "Choose…",
               hint: "Where the money was earned or spent" %>
   <%= f.association :gig, collection: current_user.gigs.order(start_date: :desc),
-              label_method: ->(g) { "#{g.name} — #{g.city}" },
+              label_method: ->(g) { "#{g.name} — #{g.country_code}" },
               include_blank: false,
               input_html: {
                 id: "entry_gig_select",
@@ -41,14 +45,11 @@
           hint: (f.object.receipt.attached? ? "Upload a file to replace the current receipt" : nil) %>
   <% end %>
 
-  <% if local_assigns[:back_path] %>
-    <div class="d-flex justify-content-between align-items-center gap-2">
-      <%= link_to "Back", back_path, class: "btn btn-outline-secondary" %>
-      <%= f.button :submit, class: "btn btn-primary" %>
-    </div>
-  <% else %>
+  <% back_path = local_assigns[:back_path] || (f.object.persisted? ? entry_path(f.object) : entries_path) %>
+  <div class="d-flex justify-content-between align-items-center gap-2">
+    <%= link_to "Back", back_path, class: "btn btn-outline-secondary" %>
     <%= f.button :submit, class: "btn btn-primary" %>
-  <% end %>
+  </div>
 <% end %>
 
 <%= render "gigs/quick_create_modal" %>
