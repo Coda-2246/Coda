@@ -1,27 +1,186 @@
-<div class="container py-5">
-  <h1>Coda</h1>
+<div class="landing">
+<main data-controller="reveal">
+  <section class="hero" style="padding:0">
+    <div class="hero-copy">
+      <span class="eyebrow">Built for freelancers who work everywhere</span>
+      <h1>Cross-border freelance finance, <span class="accent">sorted.</span></h1>
+      <p class="hero-sub">Track gigs, income, expenses, receipts and currencies in one place — so tax season stops being a spreadsheet archaeology project.</p>
 
-  <p class="lead">
-    Cross-border freelance finance, sorted.
-  </p>
+      <div class="hero-actions">
+        <%= link_to "Get started", new_user_registration_path, class: "btn btn-primary" %>
+        <a class="btn btn-ghost" href="#how">See how it works</a>
+      </div>
 
-  <p class="text-muted">
-    Track gigs, income and expenses across countries and currencies.
-  </p>
+      <div class="hero-feats">
+        <div class="hf">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M6 16v-5M11 16V8M16 16v-3M21 16V5"/></svg>
+          Income tracking
+        </div>
+        <div class="hf">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4M9 13h6M9 17h6"/></svg>
+          Smart expenses
+        </div>
+        <div class="hf">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l2-3h4l2 3"/><circle cx="12" cy="13" r="3.2"/></svg>
+          Receipts &amp; proof
+        </div>
+        <div class="hf">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.6 3 14.4 0 18M12 3c-3 3.6-3 14.4 0 18"/></svg>
+          Multi-currency
+        </div>
+      </div>
+    </div>
 
-  <div class="d-flex flex-wrap gap-2">
-    <% if user_signed_in? %>
-      <%= link_to "Go to dashboard", dashboard_path, class: "btn btn-primary" %>
-      <button type="button"
-              class="btn btn-outline-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#newEntryModal">
-        Log an entry
-      </button>
-    <% else %>
-      <%= link_to "Get started", new_user_registration_path, class: "btn btn-primary" %>
+    <div class="hero-visual">
+      <div class="dots" aria-hidden="true"></div>
+      <div class="network" aria-hidden="true">
+        <svg viewBox="0 0 600 340" preserveAspectRatio="xMidYMid meet">
+          <path class="arc" d="M300 190 Q 190 60 110 78"/>
+          <path class="arc" d="M300 190 Q 300 60 330 48"/>
+          <path class="arc" d="M300 190 Q 430 70 505 62"/>
+          <path class="arc" d="M300 190 Q 170 210 92 200"/>
+          <path class="arc" d="M300 190 Q 420 200 470 176"/>
+          <path class="arc" d="M300 190 Q 400 280 520 258"/>
+        </svg>
+      </div>
+      <div class="badge" style="top:23%;left:18%"><span class="coin coin-green">$</span><span class="tag">USD</span></div>
+      <div class="badge" style="top:14%;left:55%"><span class="coin coin-blue">€</span><span class="tag">EUR</span></div>
+      <div class="badge" style="top:18%;left:84%"><span class="coin coin-purple">¥</span><span class="tag">JPY</span></div>
+      <div class="badge" style="top:59%;left:15%"><span class="coin coin-teal">R$</span><span class="tag">BRL</span></div>
+      <div class="badge" style="top:52%;left:78%"><span class="coin coin-orange">₹</span><span class="tag">INR</span></div>
+      <div class="badge" style="top:76%;left:87%"><span class="coin coin-rose">A$</span><span class="tag">AUD</span></div>
+      <div class="hub" style="top:56%;left:50%" aria-hidden="true">
+        <svg width="34" height="34" viewBox="0 0 100 100">
+          <path d="M50 8 A42 42 0 1 0 92 50" fill="none" stroke="#1F2A44" stroke-width="17"/>
+          <path d="M50 8 A42 42 0 0 1 88 32" fill="none" stroke="#2F6B44" stroke-width="17"/>
+          <path d="M92 50 A42 42 0 0 0 88 32" fill="none" stroke="#C9C2B4" stroke-width="17"/>
+        </svg>
+      </div>
+
+      <div class="mock" role="img" aria-label="Preview of the Coda dashboard showing total income and recent transactions">
+        <div class="mock-top"><i></i><i></i><i></i></div>
+        <div class="mock-body">
+          <div class="mock-side">
+            <div class="s on"><span class="d"></span>Dashboard</div>
+            <div class="s"><span class="d"></span>Transactions</div>
+            <div class="s"><span class="d"></span>Expenses</div>
+            <div class="s"><span class="d"></span>Receipts</div>
+            <div class="s"><span class="d"></span>Currencies</div>
+            <div class="s"><span class="d"></span>Reports</div>
+          </div>
+          <div class="mock-main">
+            <div class="mock-label">Total income</div>
+            <div class="mock-num">$24,250.00</div>
+            <div class="mock-up">▲ 12.5% vs last month</div>
+            <svg class="spark" viewBox="0 0 300 64" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M0 54 L50 44 L100 48 L150 30 L200 34 L250 16 L300 10" fill="none" stroke="#2F6B44" stroke-width="2.5"/>
+              <path d="M0 54 L50 44 L100 48 L150 30 L200 34 L250 16 L300 10 L300 64 L0 64 Z" fill="rgba(47,107,68,.1)"/>
+            </svg>
+            <div class="mock-rows">
+              <div class="mock-row"><b>Upwork project</b><span class="pos">+ $1,200.00</span></div>
+              <div class="mock-row"><b>Client payment</b><span class="pos">+ $3,500.00</span></div>
+              <div class="mock-row"><b>Software expense</b><span class="neg">− $29.00</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">How it works</span>
+        <h2>Three steps between chaos and a clean ledger</h2>
+        <p>Coda follows the natural rhythm of freelance work: land the gig, get paid, keep the proof.</p>
+      </div>
+      <div class="steps">
+        <div class="step reveal"><span class="n">STEP 1</span><h3>Log your gigs</h3><p>Add clients and projects as they come in, in any country and any currency. Every gig becomes a home for its money trail.</p></div>
+        <div class="step reveal"><span class="n">STEP 2</span><h3>Track money in and out</h3><p>Record income and expenses against each gig. Coda converts everything so you always see one true total.</p></div>
+        <div class="step reveal"><span class="n">STEP 3</span><h3>Keep the receipts</h3><p>Snap and attach receipts to any transaction. When tax season or an audit arrives, the proof is already filed.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" class="features">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Features</span>
+        <h2>Everything a borderless freelancer actually needs</h2>
+        <p>No bloated accounting suite. Just the four things that keep your finances honest.</p>
+      </div>
+      <div class="fgrid">
+        <div class="fcard reveal">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M6 16v-5M11 16V8M16 16v-3M21 16V5"/></svg>
+          <h3>Income tracking</h3>
+          <p>See what every gig earned, month by month and client by client, without touching a spreadsheet.</p>
+        </div>
+        <div class="fcard reveal">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4M9 13h6M9 17h6"/></svg>
+          <h3>Smart expenses</h3>
+          <p>Categorise costs as you go — tools, software, travel — and know your real margin, not a guess.</p>
+        </div>
+        <div class="fcard reveal">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l2-3h4l2 3"/><circle cx="12" cy="13" r="3.2"/></svg>
+          <h3>Receipts &amp; proof</h3>
+          <p>Photograph receipts and attach them to transactions. Your audit trail builds itself.</p>
+        </div>
+        <div class="fcard reveal">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.6 3 14.4 0 18M12 3c-3 3.6-3 14.4 0 18"/></svg>
+          <h3>Multi-currency support</h3>
+          <p>Earn in euros, spend in reais, report in dollars. Coda keeps the exchange math straight.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="currencies">
+    <div class="wrap">
+      <div class="sec-head reveal" style="text-align:center;margin-left:auto;margin-right:auto">
+        <span class="eyebrow" style="justify-content:center">Work anywhere</span>
+        <h2>One ledger, every currency</h2>
+      </div>
+      <div class="strip reveal">
+        <span class="chip"><span class="dot" style="background:#2F6B44"></span>USD — US dollar</span>
+        <span class="chip"><span class="dot" style="background:#2B5BAA"></span>EUR — Euro</span>
+        <span class="chip"><span class="dot" style="background:#6C4FA1"></span>JPY — Japanese yen</span>
+        <span class="chip"><span class="dot" style="background:#1D7A6B"></span>BRL — Brazilian real</span>
+        <span class="chip"><span class="dot" style="background:#C96A28"></span>INR — Indian rupee</span>
+        <span class="chip"><span class="dot" style="background:#A84A66"></span>AUD — Australian dollar</span>
+        <span class="chip"><span class="dot" style="background:#5C6273"></span>+ more</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="cta reveal">
+        <h2>Stop guessing what you earned</h2>
+        <p>Join freelancers who track gigs, income, expenses and receipts across borders — all in one place.</p>
+        <%= link_to "Get started — it's free", new_user_registration_path, class: "btn btn-light" %>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <%= link_to root_path, class: "brand", style: "font-size:18px" do %>
+      <svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true">
+        <path d="M50 8 A42 42 0 1 0 92 50" fill="none" stroke="#1F2A44" stroke-width="17"/>
+        <path d="M50 8 A42 42 0 0 1 88 32" fill="none" stroke="#2F6B44" stroke-width="17"/>
+        <path d="M92 50 A42 42 0 0 0 88 32" fill="none" stroke="#C9C2B4" stroke-width="17"/>
+      </svg>
+      Coda
     <% end %>
-  </div>
 
-  <%= render "entries/new_entry_modal" if user_signed_in? %>
+    <nav class="foot-links" aria-label="Footer">
+      <a href="#how">How it works</a>
+      <a href="#features">Features</a>
+      <%= link_to "Log in", new_user_session_path %>
+    </nav>
+
+    <span>© 2026 Coda. Cross-border freelance finance.</span>
+  </div>
+</footer>
 </div>

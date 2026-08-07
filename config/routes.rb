@@ -19,6 +19,8 @@ Rails.application.routes.draw do
       to: "tax_adviser#show",
       as: :tax_adviser
 
+  get "tax-adviser/widget", to: "tax_adviser#widget", as: :tax_adviser_widget
+
   post "tax-adviser/chats",
        to: "tax_adviser#create",
        as: :tax_adviser_chats

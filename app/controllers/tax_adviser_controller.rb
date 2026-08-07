@@ -25,6 +25,14 @@ class TaxAdviserController < ApplicationController
     @messages = @conversation.tax_adviser_messages.order(:created_at)
   end
 
+  def widget
+    @conversation = current_user.tax_adviser_conversations.order(updated_at: :desc).first
+    @conversation ||= current_user.tax_adviser_conversations.create!(title: "New chat")
+    @messages = @conversation.tax_adviser_messages.order(:created_at)
+
+    render :chat
+  end
+
   def ask
     question = params[:question].to_s.strip
 

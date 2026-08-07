@@ -1,9 +1,18 @@
 // Import Google fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito:400,700|Work+Sans:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
 
 // Define fonts for body and headers
 $body-font: "Work Sans", "Helvetica", "sans-serif";
 $headers-font: "Nunito", "Helvetica", "sans-serif";
+
+// Brand fonts used by the site-wide nav (components/_navbar.scss) and the
+// landing page (pages/_home.scss) — distinct from the app's body/headers
+// fonts above, which stay unchanged everywhere else.
+:root {
+  --font-display: 'Sora', sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+}
 
 // To use a font file (.woff) uncomment following lines
 // @font-face {

@@ -5,3 +5,14 @@ $orange: #C97A40;
 $green: #4F7A65;
 $gray: #222222;
 $light-gray: #F6F3ED;
+
+// Brand tokens shared by the site-wide nav and the landing page
+// (components/_navbar.scss, pages/_home.scss). Defined as CSS custom
+// properties on :root so they're available everywhere, not just .landing.
+:root {
+  --navy: #{$blue};
+  --green: #2F6B44;
+  --green-bright: #3E8A57;
+  --ivory: #{$light-gray};
+  --line: rgba(31, 42, 68, .14);
+}

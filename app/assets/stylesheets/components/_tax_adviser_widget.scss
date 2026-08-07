@@ -1,0 +1,180 @@
+.ta-widget-toggle {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #252e4b;
+  color: white;
+  border: none;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1046;
+}
+
+.ta-widget-toggle:hover {
+  background: #1a2138;
+}
+
+.ta-widget-panel {
+  position: fixed;
+  bottom: 96px;
+  right: 24px;
+  width: 380px;
+  max-width: calc(100vw - 32px);
+  height: 560px;
+  max-height: calc(100vh - 140px);
+  background: white;
+  border-radius: 18px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+  z-index: 1046;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.ta-widget-panel turbo-frame#tax_adviser_panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.ta-widget-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+@media (max-width: 480px) {
+  .ta-widget-panel {
+    right: 16px;
+    left: 16px;
+    width: auto;
+    bottom: 88px;
+    height: calc(100vh - 120px);
+  }
+
+  .ta-widget-toggle {
+    right: 16px;
+    bottom: 16px;
+  }
+}
+
+.ta-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 16px 18px;
+  border-bottom: 1px solid #eee;
+  flex-shrink: 0;
+}
+
+.ta-panel-title {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 2px;
+}
+
+.ta-panel-subtitle {
+  font-size: 0.75rem;
+  color: #6c757d;
+}
+
+.ta-panel-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.ta-panel-actions form {
+  margin: 0;
+}
+
+.ta-panel-close {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: #6c757d;
+  padding: 0 4px;
+}
+
+.ta-panel-alert {
+  border-radius: 0;
+  font-size: 0.85rem;
+  padding: 8px 18px;
+}
+
+.ta-panel-messages {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 16px 18px;
+  min-height: 0;
+}
+
+.ta-message-row {
+  display: flex;
+  margin-bottom: 14px;
+}
+
+.ta-sender-row {
+  justify-content: flex-end;
+}
+
+.ta-receiver-row {
+  justify-content: flex-start;
+}
+
+.ta-sender-style,
+.ta-receiver-style {
+  width: fit-content;
+  max-width: 88%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 0.88rem;
+}
+
+.ta-sender-style {
+  background: #252e4b;
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+.ta-receiver-style {
+  background: #f2f0eb;
+  color: #212529;
+  border-bottom-left-radius: 4px;
+}
+
+.ta-message-name {
+  font-size: 0.68rem;
+  margin-bottom: 4px;
+  opacity: 0.7;
+}
+
+.ta-sender-style .ta-message-name {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.ta-panel-form {
+  flex-shrink: 0;
+  border-top: 1px solid #eee;
+  padding: 12px 14px;
+}
+
+.ta-panel-form textarea {
+  border-radius: 10px;
+  font-size: 0.85rem;
+  resize: none;
+}
+
+.ta-panel-loading {
+  margin-top: 8px;
+}
