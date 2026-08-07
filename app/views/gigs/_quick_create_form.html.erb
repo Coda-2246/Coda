@@ -4,8 +4,7 @@
 
     <%= f.input :name, input_html: { required: true } %>
     <%= f.input :start_date, as: :date, html5: true, input_html: { required: true } %>
-    <%= f.input :city %>
-    <%= f.input :country_code, collection: %w[GB DE FR AT US ES IT NL], include_blank: "Choose…" %>
+    <%= f.input :country_code, collection: %w[GB DE FR AT US ES IT NL], include_blank: "Choose…", input_html: {required: true} %>
 
     <%= f.button :submit, "Create gig", class: "btn btn-primary" %>
   <% end %>

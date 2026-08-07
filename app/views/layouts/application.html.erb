@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <% page_title = content_for(:title) || "Coda | Cross-border freelance finance" %>
+    <% page_title = content_for(:title) || "Coda" %>
     <% page_description = content_for(:description) || "Track gigs, income, expenses, receipts, and currencies in one place." %>
     <% page_image = image_url("/og-image.png") %>
 
@@ -33,9 +33,9 @@
 
     <%= yield :head %>
 
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="icon" href="<%= cl_image_path("image_u5s21k", width: 64, height: 64, crop: "fit", format: "png") %>" type="image/png">
+    <link rel="apple-touch-icon" href="<%= cl_image_path("image_u5s21k", width: 180, height: 180, crop: "fit", format: "png") %>">
+    <link rel="manifest" href="<%= pwa_manifest_path %>">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
