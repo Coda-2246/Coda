@@ -46,6 +46,10 @@ puts "Creating exchange rates..."
   )
 end
 
+puts "Loading current exchange rates from exchange_rates.json..."
+
+ExchangeRateLoader.new.call
+
 puts "Creating gigs..."
 
 # 2024

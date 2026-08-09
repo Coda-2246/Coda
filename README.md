@@ -23,3 +23,37 @@ was actually earned.
 
 Built with Rails 8, PostgreSQL, Hotwire (Turbo/Stimulus), and Bootstrap 5 — server-rendered,
 no SPA framework.
+
+## Running locally
+
+**Prerequisites:** Ruby 3.3.5, PostgreSQL.
+
+1. Clone the repo and install dependencies:
+   ```bash
+   git clone <repo-url>
+   cd Coda
+   bundle install
+   ```
+
+2. Add an Anthropic API key (powers the receipt extractor and AI tax coach) to a
+   `.env` file in the project root:
+   ```bash
+   echo "ANTHROPIC_API_KEY=sk-ant-..." > .env
+   ```
+
+3. Set up the database and seed demo data (one demo user, gigs, entries, exchange rates):
+   ```bash
+   bin/rails db:prepare
+   bin/rails db:seed
+   ```
+
+4. Start the server:
+   ```bash
+   bin/dev
+   ```
+
+   Or run `bin/setup` to do steps 1, 3, and 4 in one go (it also clears old logs/tmp files;
+   pass `--skip-server` to set up without starting it).
+
+The app runs at `http://localhost:3000`. Log in with the seeded demo account
+(`demo@coda.app` / `password`), or sign up for a new one.
